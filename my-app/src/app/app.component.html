@@ -1,0 +1,8 @@
+<p>{{title}}</p>
+<app-hero-list></app-hero-list>
+<input appNumeric />
+<div *appPermission="['admin', 'agent']">
+  <h3>This area can be accessed by admins and agents only</h3>
+</div>
+<app-key-logger [numeric] = "'true'"></app-key-logger>
+

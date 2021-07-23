@@ -1,0 +1,7 @@
+<h3>My heroes</h3>
+<ul>
+  <li *ngFor="let hero of heroes">
+      <app-hero-details [id]="hero.id" ></app-hero-details>
+  </li>
+</ul>
+<app-favourite-hero></app-favourite-hero>

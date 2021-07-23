@@ -1,0 +1,11 @@
+<p *ngIf = "name === 'Zubair'; else noHero">{{name}} hero works!</p>
+<p appCopyRight> </p>
+<ul>
+    <li *ngFor = "let hero of heros | sort:'name'; trackBy: trackByHeroes">
+        {{hero.name}}
+    </li>
+</ul>
+<ng-template #noHero>
+<p>{{'Hero was not found' | uppercase}}</p>
+</ng-template>
+<button (click) = "liked.emit(true)" >Like</button>
