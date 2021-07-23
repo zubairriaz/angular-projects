@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { Hero } from '../hero/hero.model';
 
 @Injectable({
@@ -9,27 +10,37 @@ import { Hero } from '../hero/hero.model';
 export class HeroService {
   constructor(private httpClient: HttpClient) {}
   heros: Hero[];
+  
   heroUrl = 'api/heroes';
   getHeros(): Observable<Hero[]> {
-    return this.httpClient.get<Hero[]>(this.heroUrl);
+    return this.httpClient.get<Hero[]>(this.heroUrl).pipe(
+      retry(2),
+      catchError((error:HttpErrorResponse)=>{
+           return throwError(error);
+      })
+    );
   }
 
-   async getHero(id: number): Hero | null {
-    let p = this.getHeros().toPromise();
-    this.heros =  await p ;
-    console.log(this.heros);
-    let heroFilteredheros = this.heros
-      ? this.heros.filter((hero) => hero.id == id)
-      : [];
-    if (heroFilteredheros.length > 0) {
-      return heroFilteredheros[0];
-    } else {
-      return null;
+  async getHero(id: number): Promise<Hero> | null {
+    let p = await this.getHeros().toPromise();
+    if (p && p.length > 0) {
+      let h = p.filter((hero) => hero.id == id)[0];
+      return new Promise((res) => res(h));
     }
+
+    return null;
   }
 
-  async getHerosPromise(){
-    return this.getHeros().toPromise();
+  createHero(hero: Hero) {
+    return this.httpClient.post<Hero>(this.heroUrl, hero);
+  }
+
+  editHero(id: number, hero: Hero): Observable<any> {
+    return this.httpClient.put<Hero>(this.heroUrl + id, hero);
+  }
+
+  deleteHero(id: number): Observable<any> {
+    return this.httpClient.delete(this.heroUrl + id);
   }
 
   getHerosS(): Hero[] {

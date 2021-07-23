@@ -4,4 +4,10 @@
       <app-hero-details [id]="hero.id" ></app-hero-details>
   </li>
 </ul>
-<app-favourite-hero></app-favourite-hero>
+<div>
+  <button (click)= "addHero('Thurdad')">Add Hero</button>
+  <button (click)= "deleteHero(heroes[0])">Delete Hero</button>
+  <button (click)= "rename(heroes[0])">Add Hero</button>
+
+
+</div>
