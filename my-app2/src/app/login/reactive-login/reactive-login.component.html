@@ -1,0 +1,9 @@
+<form [formGroup] = "loginForm" (ngSubmit) = "onLogin()">
+    <input type="text" name= "Username" formControlName = "username" required>
+    <input type="password" name= "password" formControlName = "password" required>
+    
+    <button type="submit" [disabled] = "!loginForm.valid">Login</button>
+
+    <div *ngIf="getUserName()">You are trying to login as <b>{{loginForm.controls.username.value}}</b> </div>
+
+</form>
