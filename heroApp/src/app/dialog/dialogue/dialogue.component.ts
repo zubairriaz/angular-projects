@@ -11,8 +11,6 @@ export class DialogueComponent implements OnInit {
   constructor(private service: ModalServiceService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.service.modal$.subscribe((value) => {
-      console.log(value);
-    });
+
   }
 }
