@@ -8,13 +8,16 @@ import {HttpClientModule} from "@angular/common/http";
 import { TempConversionPipe } from './pipes/temp-conversion.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './app/material.module'
-import {FlexLayoutModule} from "@angular/flex-layout"
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { CitySearchComponent } from './city-search/city-search.component'
+import {FormsModule , ReactiveFormsModule} from "@angular/forms"
 
 @NgModule({
   declarations: [
     AppComponent,
     CurrentWeatherComponent,
     TempConversionPipe,
+    CitySearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,9 @@ import {FlexLayoutModule} from "@angular/flex-layout"
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [],

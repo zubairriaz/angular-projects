@@ -1,6 +1,13 @@
 <div style="text-align: center">
   <mat-toolbar color="primary"> LocalCast Weather </mat-toolbar>
-  <div class="vertical-margin mat-caption">Your city, your forecast, right now!</div>
+  <div class="vertical-margin mat-caption">
+    Your city, your forecast, right now!
+  </div>
+  <div fxLayout="row">
+    <div fxFlexFill fxLayoutAlign="center center">
+      <app-city-search></app-city-search>
+    </div>
+  </div>
   <div fxLayout="row">
     <div fxFlex></div>
     <mat-card fxFlex="300px">
