@@ -1,0 +1,15 @@
+VS code configuration for Angular
+npm i -g mrm-task-angular-vscode
+npx mrm angular-vscode
+
+
+
+VS code configuration for Docker
+npm i -g mrm-task-npm-docker
+npx mrm-task-npm-docker
+
+Jasmine resource 
+https://daveceddia.com/jasmine-2-spy-cheat-sheet/
+
+
+
