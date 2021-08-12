@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ICurrentWeather } from '../interfaces/icurrent-weather';
 import { WeatherService } from '../services/weather.service';
 
@@ -7,15 +9,15 @@ import { WeatherService } from '../services/weather.service';
   templateUrl: './current-weather.component.html',
   styleUrls: ['./current-weather.component.css'],
 })
-export class CurrentWeatherComponent implements OnInit {
-  current: ICurrentWeather;
-  constructor(private weatherService: WeatherService) {}
-
-  ngOnInit(): void {
-    this.weatherService
-      .getWeatherData('Lahore')
-      .subscribe((data) => (this.current = data));
+export class CurrentWeatherComponent {
+  current$: Observable<ICurrentWeather>;
+  constructor(private weatherService: WeatherService) {
+    this.current$ = this.weatherService.currentWeatherSub;
   }
+
+
+
+
 
   getOrdinal(n: Date) {
     let date = new Date(n).getDate()

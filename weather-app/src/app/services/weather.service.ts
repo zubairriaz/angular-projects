@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {IWeatherService} from './iweather-service'
 import { ICurrentWeather } from '../interfaces/icurrent-weather';
+import { stringify } from '@angular/compiler/src/util';
 
 interface IWeatherData {
   weather: [
@@ -25,12 +26,26 @@ interface IWeatherData {
   providedIn: 'root',
 })
 export class WeatherService implements IWeatherService{
-  constructor(private http: HttpClient) {}
+  readonly currentWeatherSub :BehaviorSubject<ICurrentWeather>;
+  constructor(private http: HttpClient) {
+    this.currentWeatherSub = new BehaviorSubject<ICurrentWeather>({
+       City:"",
+       Country:"",
+       date:undefined,
+       description:"",
+       image:"",
+       temperature:""
+    })
+  }
 
   getWeatherData(cityName: string):Observable<ICurrentWeather> {
     const uriParams: HttpParams = new HttpParams().set('q', cityName).set('appid', environment.apiKey);
     let result = this.http.get<IWeatherData>(environment.appUrl, {params:uriParams}).pipe(map(data=>this.convertToWeather(data)))
     return result;
+  }
+
+  updateWeatherData(cityName:string){
+    this.getWeatherData(cityName).subscribe(data=>this.currentWeatherSub.next(data));
   }
 
   convertToWeather(data:IWeatherData):ICurrentWeather{
